@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@drawable/border_resource"
     tools:context="com.mkhan.tasbeeh.MainActivity">
 
     <TextView
@@ -26,12 +26,12 @@
 
     <Button
         android:id="@+id/btnAdd"
-        android:layout_width="@dimen/dim_add_button_width"
-        android:layout_height="@dimen/dim_add_button_height"
+        android:layout_width="304dp"
+        android:layout_height="60dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="25dp"
         android:background="@drawable/layout_round_corner"
         android:backgroundTint="@color/colorPrimary"
         android:fontFamily="sans-serif"
@@ -43,20 +43,22 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/textViewCounter"
-        app:layout_constraintRight_toRightOf="@+id/textViewCounter" />
+        app:layout_constraintRight_toRightOf="@+id/textViewCounter"
+        android:layout_marginLeft="32dp"
+        app:layout_constraintHorizontal_bias="0.502"
+        android:layout_marginRight="32dp" />
 
     <Button
         android:id="@+id/btnMinus"
         style="@android:style/Widget.Button"
-        android:layout_width="@dimen/dim_reset_button_width"
-        android:layout_height="@dimen/dim_reset_button_height"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:layout_alignBaseline="@+id/btnAdd"
         android:layout_alignBottom="@+id/btnAdd"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="16dp"
 
-        android:layout_marginTop="0dp"
         android:background="@drawable/layout_round_corner"
         android:text="-"
         android:textAlignment="center"
@@ -65,12 +67,13 @@
         android:textSize="@dimen/dim_reset_button_text_size"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnReset" />
+        app:layout_constraintTop_toTopOf="@+id/btnReset"
+        android:layout_marginStart="16dp" />
 
     <Button
         android:id="@+id/btnReset"
-        android:layout_width="@dimen/dim_reset_button_width"
-        android:layout_height="@dimen/dim_reset_button_height"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/layout_round_corner"
@@ -81,7 +84,8 @@
         android:textColor="@android:color/background_light"
         android:textSize="@dimen/dim_reset_button_text_size"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="16dp" />
 
 
 </android.support.constraint.ConstraintLayout>

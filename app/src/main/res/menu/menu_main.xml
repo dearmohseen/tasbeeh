@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.mkhan.tasbeeh.MainActivity">
+    <!--<item
+        android:id="@+id/action_goal"
+        android:orderInCategory="100"
+        android:title="Goal"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_background"
+        android:orderInCategory="100"
+        android:title="Backgound"
+        app:showAsAction="never" />-->
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="Settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_rate_app"
+        android:orderInCategory="100"
+        android:title="Rate It. JazakAllah"
+        app:showAsAction="never" />
+</menu>
