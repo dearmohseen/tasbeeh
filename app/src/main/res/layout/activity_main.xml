@@ -11,18 +11,73 @@
         android:id="@+id/textViewCounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="serif"
         android:text="1000"
         android:textAlignment="center"
         android:textColor="@android:color/background_light"
         android:textSize="@dimen/dim_tv_counter"
+        app:layout_constraintBottom_toTopOf="@+id/btnAdd"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/btnReset"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintTop_toBottomOf="@+id/btnReset" />
+
+    <TextView
+        android:id="@+id/goalText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif"
+        android:text="Goal :"
+        android:textColor="@android:color/background_light"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toLeftOf="@+id/btnMinus"
+        app:layout_constraintTop_toBottomOf="@+id/btnMinus"
+        app:layout_constraintVertical_bias="0.481" />
+
+    <TextView
+        android:id="@+id/goalValueText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:text="1000"
+        android:textColor="@android:color/background_light"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toRightOf="@+id/goalText"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintTop_toTopOf="@+id/goalText"
+        android:layout_marginTop="0dp" />
+
+    <TextView
+        android:id="@+id/goalRemainText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="0dp"
+        android:fontFamily="sans-serif"
+        android:text="Remain :"
+        android:textColor="@android:color/background_light"
+        android:textSize="14sp"
+        app:layout_constraintRight_toLeftOf="@+id/goalRemainValue"
+        app:layout_constraintTop_toTopOf="@+id/goalRemainValue" />
+
+    <TextView
+        android:id="@+id/goalRemainValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnAdd" />
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif"
+        android:text="1000000"
+        android:textColor="@android:color/background_light"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnAdd"
+        app:layout_constraintRight_toRightOf="@+id/btnAdd"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCounter" />
 
     <Button
         android:id="@+id/btnAdd"

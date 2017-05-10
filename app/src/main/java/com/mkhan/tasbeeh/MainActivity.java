@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,7 +26,14 @@ public class MainActivity extends AppCompatActivity {
     private int counterValue = 0;
 
     private Configuration config;
-    SharedPreferences sharedPref;
+    public SharedPreferences sharedPref;
+
+    private TextView  goalTextView;
+    private TextView  goalValueTextView;
+    private TextView  goalRemainTextView;
+    private TextView  goalRemainValueTextView;
+    private int goalValue = 0;
+    private int goalRemainValue = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +48,15 @@ public class MainActivity extends AppCompatActivity {
         prepareSharedPreference();
 
         textViewCounter = (TextView) findViewById(R.id.textViewCounter);
+
+        goalTextView = (TextView) findViewById(R.id.goalText);
+        goalValueTextView = (TextView) findViewById(R.id.goalValueText);
+        goalRemainTextView = (TextView) findViewById(R.id.goalRemainText);
+        goalRemainValueTextView = (TextView) findViewById(R.id.goalRemainValue);
+
         readCounterFromSharedPref();
         updateCounterUI();
+        //updateGoalUI();
 
         btnAdd = (Button) findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -122,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(getString(R.string.counter_value), counterValue);
         editor.commit();
+        updateGoalUI();
     }
 
     public void incrementCounter() {
@@ -142,8 +159,57 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void prepareSharedPreference(){
-        sharedPref = this.getSharedPreferences(
-                getString(R.string.preference_file_key), this.MODE_PRIVATE);
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+    }
+
+    public void updateGoalUI(){
+            goalValue = Integer.valueOf(sharedPref.getString(getString(R.string.pref_goal_key),"0"));
+            if(goalValue == 0){
+                 goalTextView.setText("No Goal Set");
+                goalValueTextView.setVisibility(View.INVISIBLE);
+                  goalRemainTextView.setVisibility(View.INVISIBLE);
+                  goalRemainValueTextView.setVisibility(View.INVISIBLE);
+
+            } else {
+                //System.out.println("Mohseen : updateGoalUI Else  " + goalTextView);
+
+                goalTextView.setText("Goal :");
+                goalValueTextView.setText(Integer.toString(goalValue));
+                goalValueTextView.setVisibility(View.VISIBLE);
+
+                updateRemainingGoalValue();
+
+            }
+
+    }
+
+    private void updateRemainingGoalValue(){
+        goalRemainValue = goalValue - counterValue >= 1 ? goalValue - counterValue : 0;
+        if(goalRemainValue > 0){
+            goalRemainValueTextView.setText(Integer.toString(goalRemainValue));
+            goalRemainTextView.setText("Remain :");
+            goalRemainTextView.setVisibility(View.VISIBLE);
+            goalRemainValueTextView.setVisibility(View.VISIBLE);
+        } else {
+            goalRemainValueTextView.setVisibility(View.VISIBLE);
+            goalRemainTextView.setVisibility(View.INVISIBLE);
+            goalRemainValueTextView.setText("MashaAllah ! Goal Achieved.");
+        }
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+       System.out.println("Mohseen : MainActivity Resume");
+        updateGoalUI();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        System.out.println("Mohseen : MainActivity onPause");
     }
 
 }
