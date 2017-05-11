@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView  goalRemainValueTextView;
     private int goalValue = 0;
     private int goalRemainValue = 0;
+    private int width , height;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         config = getResources().getConfiguration();
-        /*width = config.screenWidthDp;
-        height = config.screenHeightDp;*/
+        width = config.screenWidthDp;
+        height = config.screenHeightDp;
 
         prepareSharedPreference();
 
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        setTextSizes();
 }
 
     @Override
@@ -191,9 +193,9 @@ public class MainActivity extends AppCompatActivity {
             goalRemainTextView.setVisibility(View.VISIBLE);
             goalRemainValueTextView.setVisibility(View.VISIBLE);
         } else {
-            goalRemainValueTextView.setVisibility(View.VISIBLE);
-            goalRemainTextView.setVisibility(View.INVISIBLE);
-            goalRemainValueTextView.setText("MashaAllah ! Goal Achieved.");
+            goalRemainValueTextView.setVisibility(View.INVISIBLE);
+            goalRemainTextView.setVisibility(View.VISIBLE);
+            goalRemainTextView.setText("MashaAllah ! Goal Achieved.");
         }
 
 
@@ -202,14 +204,49 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-       System.out.println("Mohseen : MainActivity Resume");
+       //System.out.println("Mohseen : MainActivity Resume");
         updateGoalUI();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        System.out.println("Mohseen : MainActivity onPause");
+        //System.out.println("Mohseen : MainActivity onPause");
     }
+
+    private void setTextSizes(){
+        //System.out.println("Mohseen : setTextSizes " + width + " : " +height + " Orientation : " + config.orientation);
+
+        if(config.orientation == 1) {
+            if (width > 500 && height > 600) {
+                btnReset.getLayoutParams().width = 400;
+                btnReset.getLayoutParams().height = 150;
+                btnSubstract.getLayoutParams().width = 400;
+                btnSubstract.getLayoutParams().height = 150;
+                btnAdd.getLayoutParams().width = width - 100;
+                btnAdd.getLayoutParams().height = 150;
+                goalTextView.setTextSize(30);
+                goalValueTextView.setTextSize(30);
+                goalRemainTextView.setTextSize(30);
+                goalRemainValueTextView.setTextSize(30);
+            }
+        } else {
+            if (width > 700 && height > 450) {
+                btnReset.getLayoutParams().width = 400;
+                btnReset.getLayoutParams().height = 150;
+                btnSubstract.getLayoutParams().width = 400;
+                btnSubstract.getLayoutParams().height = 150;
+                btnAdd.getLayoutParams().width = width - 100;
+                btnAdd.getLayoutParams().height = 150;
+                goalTextView.setTextSize(30);
+                goalValueTextView.setTextSize(30);
+                goalRemainTextView.setTextSize(30);
+                goalRemainValueTextView.setTextSize(30);
+                textViewCounter.setTextSize(100);
+            }
+        }
+
+    }
+
 
 }

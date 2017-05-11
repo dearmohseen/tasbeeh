@@ -55,29 +55,30 @@
         android:id="@+id/goalRemainText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="8dp"
         android:layout_marginTop="0dp"
         android:fontFamily="sans-serif"
         android:text="Remain :"
         android:textColor="@android:color/background_light"
         android:textSize="14sp"
-        app:layout_constraintRight_toLeftOf="@+id/goalRemainValue"
-        app:layout_constraintTop_toTopOf="@+id/goalRemainValue" />
+        app:layout_constraintTop_toTopOf="@+id/goalRemainValue"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/btnAdd" />
 
     <TextView
         android:id="@+id/goalRemainValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
         android:text="1000000"
         android:textColor="@android:color/background_light"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/btnAdd"
-        app:layout_constraintRight_toRightOf="@+id/btnAdd"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCounter" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewCounter"
+        app:layout_constraintVertical_bias="0.492"
+        app:layout_constraintLeft_toRightOf="@+id/goalRemainText"
+        android:layout_marginLeft="8dp" />
 
     <Button
         android:id="@+id/btnAdd"
