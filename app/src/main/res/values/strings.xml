@@ -40,16 +40,16 @@
         <item>Blue</item>
         <item>Brown</item>
         <item>White</item>
-        <item>Green - Lite</item>
+        <item>Purple</item>
     </string-array>
     <string-array name="pref_backgrnd_color_values">
-        <item>#D4AC0D</item>
+        <item>#cca300</item>
         <item>#000000</item>
         <item>#ff3300</item>
         <item>#1b62d3</item>
-        <item>#d67c2f</item>
+        <item>#bf8040</item>
         <item>#ffffff</item>
-        <item>#47e8ca</item>
+        <item>#e600e6</item>
     </string-array>
 
     <string-array name="list_preference_entries">
