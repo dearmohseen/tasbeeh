@@ -4,9 +4,12 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private int goalValue = 0;
     private int goalRemainValue = 0;
     private int width , height;
+    private ConstraintLayout mainLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         config = getResources().getConfiguration();
         width = config.screenWidthDp;
         height = config.screenHeightDp;
+
+        mainLayout = (ConstraintLayout) findViewById(R.id.mainLayoutID);
 
         prepareSharedPreference();
 
@@ -100,11 +106,11 @@ public class MainActivity extends AppCompatActivity {
          //Handle item selection
         switch (item.getItemId()) {
             case R.id.action_rate_app:
-                System.out.println("Mohseen : Rate App Clicked ");
+                //System.out.println("Mohseen : Rate App Clicked ");
                 rateApp();
                 return true;
             case R.id.action_settings:
-                System.out.println("Mohseen : Action setting Clicked ");
+                //System.out.println("Mohseen : Action setting Clicked ");
                 this.startActivity(new Intent(this,SettingsActivity.class));
                 return true;
             default:
@@ -201,11 +207,43 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    public void updateTextColor(int color){
+        btnSubstract.setTextColor(color);
+        btnReset.setTextColor(color);
+        btnAdd.setTextColor(color);
+        goalTextView.setTextColor(color);
+        goalValueTextView.setTextColor(color);
+        goalRemainTextView.setTextColor(color);
+        goalRemainValueTextView.setTextColor(color);
+        textViewCounter.setTextColor(color);
+    }
+
+    public void updateTheme(){
+
+        String color = sharedPref.getString(getString(R.string.pref_background_color),"#000000");
+        GradientDrawable bgShape = (GradientDrawable)mainLayout.getBackground();
+       // System.out.println("Mohseen : updateTheme " +  color + " :: " + sharedPref.getAll());
+        bgShape.setColor(Color.parseColor(color));
+
+        boolean darkText = sharedPref.getBoolean(getString(R.string.pref_text_color),false);
+        if(darkText){
+            updateTextColor(Color.BLACK);
+            if(color.equals("#000000")){
+                bgShape.setColor(Color.WHITE);
+            }
+        }else {
+            updateTextColor(Color.WHITE);
+        }
+
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
        //System.out.println("Mohseen : MainActivity Resume");
         updateGoalUI();
+        updateTheme();
     }
 
     @Override
@@ -218,6 +256,7 @@ public class MainActivity extends AppCompatActivity {
         //System.out.println("Mohseen : setTextSizes " + width + " : " +height + " Orientation : " + config.orientation);
 
         if(config.orientation == 1) {
+
             if (width > 500 && height > 600) {
                 btnReset.getLayoutParams().width = 400;
                 btnReset.getLayoutParams().height = 150;
@@ -229,6 +268,12 @@ public class MainActivity extends AppCompatActivity {
                 goalValueTextView.setTextSize(30);
                 goalRemainTextView.setTextSize(30);
                 goalRemainValueTextView.setTextSize(30);
+            } else if(width > 310 && height > 500){
+                int size  = 20;
+                goalTextView.setTextSize(size);
+                goalValueTextView.setTextSize(size);
+                goalRemainTextView.setTextSize(size);
+                goalRemainValueTextView.setTextSize(size);
             }
         } else {
             if (width > 700 && height > 450) {

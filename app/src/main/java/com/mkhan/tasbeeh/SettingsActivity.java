@@ -165,7 +165,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity  {
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
-            System.out.println("Mohseen : GeneralPreferenceFragment : onOptionsItemSelected");
+            //System.out.println("Mohseen : GeneralPreferenceFragment : onOptionsItemSelected");
             int id = item.getItemId();
             if (id == android.R.id.home) {
                 startActivity(new Intent(getActivity(), SettingsActivity.class));
@@ -186,7 +186,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity  {
             super.onCreate(savedInstanceState);
             //System.out.println("Mohseen : BackgroundColorPreferenceFragment : onCreate");
             //addPreferencesFromResource(R.xml.pref_data_sync);
-            //setHasOptionsMenu(true);
+            setHasOptionsMenu(true);
 
             bindPreferenceSummaryToValue(findPreference("sync_frequency"));
         }
