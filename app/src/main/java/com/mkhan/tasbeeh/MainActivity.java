@@ -233,9 +233,12 @@ public class MainActivity extends AppCompatActivity {
                 bgShape.setColor(Color.WHITE);
             }
         }else {
-            updateTextColor(Color.WHITE);
+            if(color.equals("#ffffff")){
+                updateTextColor(Color.BLACK);
+            } else {
+                updateTextColor(Color.WHITE);
+            }
         }
-
     }
 
     @Override
@@ -274,6 +277,9 @@ public class MainActivity extends AppCompatActivity {
                 goalValueTextView.setTextSize(size);
                 goalRemainTextView.setTextSize(size);
                 goalRemainValueTextView.setTextSize(size);
+                final float scale = this.getResources().getDisplayMetrics().density;
+                int pixels = (int) (100 * scale + 0.5f);
+                btnAdd.getLayoutParams().height = pixels;
             }
         } else {
             if (width > 700 && height > 450) {
