@@ -335,12 +335,14 @@ public class MainActivity extends AppCompatActivity implements
         if(config.orientation == 1) {
 
             if (width > 500 && height > 600) {
-                btnReset.getLayoutParams().width = 400;
+                btnReset.getLayoutParams().width = 350;
                 btnReset.getLayoutParams().height = 150;
-                btnSubstract.getLayoutParams().width = 400;
+                btnSubstract.getLayoutParams().width = 250;
                 btnSubstract.getLayoutParams().height = 150;
                 btnAdd.getLayoutParams().width = width - 100;
                 btnAdd.getLayoutParams().height = 150;
+                buttonBulkAdd.getLayoutParams().width = 250;
+                buttonBulkAdd.getLayoutParams().height = 150;
                 goalTextView.setTextSize(30);
                 goalValueTextView.setTextSize(30);
                 goalRemainTextView.setTextSize(30);
@@ -357,12 +359,14 @@ public class MainActivity extends AppCompatActivity implements
             }
         } else {
             if (width > 700 && height > 450) {
-                btnReset.getLayoutParams().width = 400;
+                btnReset.getLayoutParams().width = 350;
                 btnReset.getLayoutParams().height = 150;
-                btnSubstract.getLayoutParams().width = 400;
+                btnSubstract.getLayoutParams().width = 250;
                 btnSubstract.getLayoutParams().height = 150;
                 btnAdd.getLayoutParams().width = width - 100;
                 btnAdd.getLayoutParams().height = 150;
+                buttonBulkAdd.getLayoutParams().width = 250;
+                buttonBulkAdd.getLayoutParams().height = 150;
                 goalTextView.setTextSize(30);
                 goalValueTextView.setTextSize(30);
                 goalRemainTextView.setTextSize(30);
