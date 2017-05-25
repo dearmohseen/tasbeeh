@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements
         switch (item.getItemId()) {
             case R.id.action_rate_app:
                 //System.out.println("Mohseen : Rate App Clicked ");
-                rateApp();
+                Utility.rateApp(this);
                 return true;
             case R.id.action_settings:
                 //System.out.println("Mohseen : Action setting Clicked ");
@@ -153,22 +153,6 @@ public class MainActivity extends AppCompatActivity implements
             default:
                 this.startActivity(new Intent(this,SettingsActivity.class));
                 return true;
-        }
-    }
-
-    private void rateApp(){
-        Uri uri = Uri.parse("market://details?id=" + this.getPackageName());
-        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
-        // To count with Play market backstack, After pressing back button,
-        // to taken back to our application, we need to add following flags to intent.
-        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
-                Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
-                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-        try {
-            startActivity(goToMarket);
-        } catch (ActivityNotFoundException e) {
-            startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("http://play.google.com/store/apps/details?id=" + this.getPackageName())));
         }
     }
 
