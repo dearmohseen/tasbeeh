@@ -13,6 +13,12 @@
         android:title="Backgound"
         app:showAsAction="never" />-->
     <item
+        android:id="@+id/menu_item_share"
+        app:showAsAction="ifRoom"
+        android:title="Share"
+        app:actionProviderClass="android.support.v7.widget.ShareActionProvider" />
+
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="Settings"

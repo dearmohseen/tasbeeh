@@ -10,17 +10,22 @@ import android.net.Uri;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
+import android.view.HapticFeedbackConstants;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements
+        ShareActionProvider.OnShareTargetSelectedListener{
 
     private TextView  textViewCounter;
     private Button btnAdd;
@@ -39,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
     private int goalRemainValue = 0;
     private int width , height;
     private ConstraintLayout mainLayout;
+
+    private ShareActionProvider mShareActionProvider;
+    Intent shareIntent=new Intent(Intent.ACTION_SEND);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,9 +102,34 @@ public class MainActivity extends AppCompatActivity {
 }
 
     @Override
+    public boolean onShareTargetSelected(ShareActionProvider source,
+                                         Intent intent) {
+        Toast.makeText(this, intent.getComponent().toString(),
+                Toast.LENGTH_LONG).show();
+
+        return(false);
+    }
+
+    private Intent createShareForecastIntent() {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, Utility.APP_STORE_URL + this.getPackageName());
+        return shareIntent;
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        MenuItem item=menu.findItem(R.id.menu_item_share  );
+        mShareActionProvider=(ShareActionProvider) MenuItemCompat.getActionProvider(item);
+        //System.out.println(" onCreateOptionsMenu : mShareActionProvider " + mShareActionProvider);
+
+        if(mShareActionProvider != null) {
+            mShareActionProvider.setShareIntent(createShareForecastIntent());
+        }
         return true;
     }
 
@@ -110,6 +143,10 @@ public class MainActivity extends AppCompatActivity {
                 rateApp();
                 return true;
             case R.id.action_settings:
+                //System.out.println("Mohseen : Action setting Clicked ");
+                this.startActivity(new Intent(this,SettingsActivity.class));
+                return true;
+            case R.id.menu_item_share:
                 //System.out.println("Mohseen : Action setting Clicked ");
                 this.startActivity(new Intent(this,SettingsActivity.class));
                 return true;
