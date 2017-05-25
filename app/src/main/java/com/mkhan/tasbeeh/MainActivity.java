@@ -1,6 +1,7 @@
 package com.mkhan.tasbeeh;
 
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -11,9 +12,12 @@ import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ShareActionProvider;
+import android.text.Editable;
+import android.text.InputType;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.Menu;
@@ -21,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements
     private Button btnAdd;
     private Button btnSubstract;
     private Button btnReset;
+    private Button buttonBulkAdd;
     private int counterValue = 0;
 
     private Configuration config;
@@ -47,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements
 
     private ShareActionProvider mShareActionProvider;
     Intent shareIntent=new Intent(Intent.ACTION_SEND);
+
+    AlertDialog.Builder alert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +85,15 @@ public class MainActivity extends AppCompatActivity implements
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                incrementCounter();
+                incrementCounter(1);
+            }
+        });
+
+        buttonBulkAdd = (Button) findViewById(R.id.buttonBulkAdd);
+        buttonBulkAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                incrementInBulk();
             }
         });
 
@@ -100,6 +116,42 @@ public class MainActivity extends AppCompatActivity implements
 
         setTextSizes();
 }
+
+    public void incrementInBulk(){
+        if(alert == null) {
+            alert = new AlertDialog.Builder(this);
+        }
+
+        final EditText edittext = new EditText(this);
+        edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
+        //alert.setMessage("Enter Your Message");
+        alert.setTitle("Enter Number to Add to Counter");
+        alert.setView(edittext);
+
+        alert.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //What ever you want to do with the value
+                Editable YouEditTextValue = edittext.getText();
+                if(YouEditTextValue != null && !YouEditTextValue.toString().isEmpty()) {
+                    //System.out.println("Mohseen incrementInBulk YouEditTextValue : " + YouEditTextValue);
+                    int oldValue = counterValue;
+                    incrementCounter(Integer.valueOf(YouEditTextValue.toString()));
+                    Utility.showToast(getApplicationContext(),YouEditTextValue.toString() + " Successfully added to " + oldValue);
+                }
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // what ever you want to do with No option.
+            }
+        });
+
+        alert.show();
+
+        //counterValue = counterValue +1;
+        updateCounterUI();
+    }
 
     @Override
     public boolean onShareTargetSelected(ShareActionProvider source,
@@ -170,8 +222,8 @@ public class MainActivity extends AppCompatActivity implements
         updateGoalUI();
     }
 
-    public void incrementCounter() {
-        counterValue = counterValue +1;
+    public void incrementCounter(int newValue) {
+        counterValue = counterValue +newValue;
         updateCounterUI();
     }
 
@@ -233,6 +285,7 @@ public class MainActivity extends AppCompatActivity implements
         btnSubstract.setTextColor(color);
         btnReset.setTextColor(color);
         btnAdd.setTextColor(color);
+        buttonBulkAdd.setTextColor(color);
         goalTextView.setTextColor(color);
         goalValueTextView.setTextColor(color);
         goalRemainTextView.setTextColor(color);

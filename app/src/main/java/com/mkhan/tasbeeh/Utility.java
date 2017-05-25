@@ -1,9 +1,11 @@
 package com.mkhan.tasbeeh;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 /**
  * Created by khanm on 5/14/2017.
@@ -27,6 +29,10 @@ public class Utility {
             activity.startActivity(new Intent(Intent.ACTION_VIEW,
                     Uri.parse(APP_STORE_URL + activity.getPackageName())));
         }
+    }
+
+    public static void showToast(Context context,String message){
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
     public static void main(String args[]){
