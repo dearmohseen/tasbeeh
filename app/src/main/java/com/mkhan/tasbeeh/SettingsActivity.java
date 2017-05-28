@@ -18,15 +18,18 @@ import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
+import android.widget.Toast;
 
 import java.util.List;
 
 public class SettingsActivity extends AppCompatPreferenceActivity  {
 
     static SharedPreferences sharedPreferences;
+    static Context context;
 
     /**
      * A preference value change listener that updates the preference's summary
@@ -55,10 +58,28 @@ public class SettingsActivity extends AppCompatPreferenceActivity  {
                                 : null);
 
             }else {
-                preference.setSummary(stringValue);
+               /* System.out.println("Mohseen : OnPreferenceChangeListener Key : " + preference.getKey()  + " preference : "+ preference
+                        + " stringValue : " + stringValue);
+*/
+               preference.setSummary(stringValue);
+                /*if("pref_goal_key".equalsIgnoreCase(preference.getKey())){
+                    Long goalValue = Long.valueOf(stringValue);
+                    preference.setSummary(stringValue);
+                   if(goalValue > 99999999999l){
+                        //Toast.makeText(context, "Goal not updated. value should be less than 99999999999", Toast.LENGTH_LONG).show();
+                        preference.setSummary("99999999999");
+                        //return false;
+                    } else {
+                        preference.setSummary(stringValue);
+                        //Toast.makeText(context, "Goal Successfully Set to " + stringValue, Toast.LENGTH_LONG).show();
+                    }
+                }*/
             }
             return true;
         }
+
+
+
     };
 
     /**
@@ -83,6 +104,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity  {
         //System.out.println("Mohseen : bindPreferenceSummaryToValue ");
         // Set the listener to watch for value changes.
         preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
+
+        if(context == null){
+            context = preference.getContext();
+        }
 
         // Trigger the listener immediately with the preference's current value.
         if(sharedPreferences == null) {

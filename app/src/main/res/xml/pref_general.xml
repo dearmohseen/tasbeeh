@@ -14,9 +14,11 @@
         android:inputType="number"
         android:key="@string/pref_goal_key"
         android:maxLines="1"
+        android:maxLength="11"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="@string/pref_header_goal" />
+        android:title="@string/pref_header_goal"
+        />
 
 
     <ListPreference

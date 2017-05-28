@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity implements
     private TextView  goalValueTextView;
     private TextView  goalRemainTextView;
     private TextView  goalRemainValueTextView;
-    private int goalValue = 0;
-    private int goalRemainValue = 0;
+    private long goalValue = 0;
+    private long goalRemainValue = 0;
     private int width , height;
     private ConstraintLayout mainLayout;
 
@@ -244,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     public void updateGoalUI(){
-            goalValue = Integer.valueOf(sharedPref.getString(getString(R.string.pref_goal_key),"0"));
+            goalValue = Long.valueOf(sharedPref.getString(getString(R.string.pref_goal_key),"0"));
             if(goalValue == 0){
                  goalTextView.setText("No Goal Set");
                 goalValueTextView.setVisibility(View.INVISIBLE);
@@ -255,7 +255,7 @@ public class MainActivity extends AppCompatActivity implements
                 //System.out.println("Mohseen : updateGoalUI Else  " + goalTextView);
 
                 goalTextView.setText("Goal :");
-                goalValueTextView.setText(Integer.toString(goalValue));
+                goalValueTextView.setText(Long.toString(goalValue));
                 goalValueTextView.setVisibility(View.VISIBLE);
 
                 updateRemainingGoalValue();
@@ -267,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements
     private void updateRemainingGoalValue(){
         goalRemainValue = goalValue - counterValue >= 1 ? goalValue - counterValue : 0;
         if(goalRemainValue > 0){
-            goalRemainValueTextView.setText(Integer.toString(goalRemainValue));
+            goalRemainValueTextView.setText(Long.toString(goalRemainValue));
             goalRemainTextView.setText("Remain :");
             goalRemainTextView.setVisibility(View.VISIBLE);
             goalRemainValueTextView.setVisibility(View.VISIBLE);
