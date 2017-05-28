@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ShareActionProvider;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
@@ -124,6 +125,9 @@ public class MainActivity extends AppCompatActivity implements
 
         final EditText edittext = new EditText(this);
         edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
+        InputFilter[] FilterArray = new InputFilter[1];
+        FilterArray[0] = new InputFilter.LengthFilter(7);
+        edittext.setFilters(FilterArray);
         //alert.setMessage("Enter Your Message");
         alert.setTitle("Enter Number to Add to Counter");
         alert.setView(edittext);
@@ -132,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(DialogInterface dialog, int whichButton) {
                 //What ever you want to do with the value
                 Editable YouEditTextValue = edittext.getText();
+
                 if(YouEditTextValue != null && !YouEditTextValue.toString().isEmpty()) {
                     //System.out.println("Mohseen incrementInBulk YouEditTextValue : " + YouEditTextValue);
                     int oldValue = counterValue;
