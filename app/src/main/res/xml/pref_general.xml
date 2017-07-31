@@ -35,4 +35,9 @@
         android:title="@string/pref_text_color_title"
         android:defaultValue="false" />
 
+    <SwitchPreference
+        android:key="@string/pref_vibrate"
+        android:title="@string/pref_vibrate_text"
+        android:defaultValue="true" />
+
 </PreferenceScreen>

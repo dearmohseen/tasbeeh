@@ -3,6 +3,7 @@ package com.mkhan.tasbeeh;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -35,7 +36,19 @@ public class Utility {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
-    public static void main(String args[]){
+    public static void writeLongToSharedPref(SharedPreferences sharedPref, String key, long value){
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putLong(key, value);
+        editor.commit();
+    }
 
+    public static void writeBooleanToSharedPref(SharedPreferences sharedPref,String key, Boolean value){
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(key, value);
+        editor.commit();
+    }
+
+    public static boolean readBooleanFromSharedPref(SharedPreferences sharedPref,String key){
+        return sharedPref.getBoolean(key,true);
     }
 }

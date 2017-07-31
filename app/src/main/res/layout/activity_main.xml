@@ -89,9 +89,12 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="25dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
         android:background="@drawable/layout_round_corner"
         android:backgroundTint="@color/colorPrimary"
         android:fontFamily="sans-serif"
+        android:hapticFeedbackEnabled="true"
         android:text="+"
         android:textAlignment="center"
         android:textAllCaps="false"
@@ -99,11 +102,9 @@
         android:textSize="@dimen/dim_add_button_text_size"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@+id/textViewCounter"
-        app:layout_constraintRight_toRightOf="@+id/textViewCounter"
-        android:layout_marginLeft="32dp"
         app:layout_constraintHorizontal_bias="0.502"
-        android:layout_marginRight="32dp" />
+        app:layout_constraintLeft_toLeftOf="@+id/textViewCounter"
+        app:layout_constraintRight_toRightOf="@+id/textViewCounter" />
 
     <Button
         android:id="@+id/btnMinus"

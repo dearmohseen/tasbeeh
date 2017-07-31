@@ -1,28 +1,31 @@
 package com.mkhan.tasbeeh;
 
-import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.net.Uri;
-import android.preference.Preference;
+import android.media.AudioManager;
+import android.os.Bundle;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.ShareActionProvider;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -55,6 +58,10 @@ public class MainActivity extends AppCompatActivity implements
     private ShareActionProvider mShareActionProvider;
     Intent shareIntent=new Intent(Intent.ACTION_SEND);
 
+    AudioManager audioManager;
+    ContentResolver mContentResolver;
+    Vibrator vibrator ;
+
     AlertDialog.Builder alert;
 
     @Override
@@ -81,14 +88,20 @@ public class MainActivity extends AppCompatActivity implements
         readCounterFromSharedPref();
         updateCounterUI();
         //updateGoalUI();
+        audioManager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        mContentResolver = this.getContentResolver();
 
         btnAdd = (Button) findViewById(R.id.btnAdd);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
+        btnAdd.setSoundEffectsEnabled(true);
+        btnAdd.setOnTouchListener(new HapticListner());
+        /*btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                incrementCounter(1);
+                System.out.println("********Mohseen OnClick************");
+
             }
-        });
+        });*/
 
         buttonBulkAdd = (Button) findViewById(R.id.buttonBulkAdd);
         buttonBulkAdd.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +130,44 @@ public class MainActivity extends AppCompatActivity implements
 
         setTextSizes();
 }
+
+    private class HapticListner implements View.OnTouchListener {
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event){
+
+            if(event.getAction() == MotionEvent.ACTION_DOWN){
+                incrementCounter(1);
+
+                boolean isTouchSoundsEnabled = Settings.System.getInt(mContentResolver,
+                        Settings.System.SOUND_EFFECTS_ENABLED, 1) != 0;
+
+                //v.performHapticFeedback(HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING,HapticFeedbackConstants.KEYBOARD_TAP);
+                if(!isTouchSoundsEnabled){
+                    audioManager.playSoundEffect(SoundEffectConstants.CLICK,AudioManager.FLAG_VIBRATE);
+                } else {
+                    v.playSoundEffect(SoundEffectConstants.CLICK);
+                }
+
+                if(Utility.readBooleanFromSharedPref(sharedPref,getString(R.string.pref_vibrate))){
+                    boolean isHapticEnabled = Settings.System.getInt(mContentResolver,
+                            Settings.System.HAPTIC_FEEDBACK_ENABLED, 1) != 0;
+                    if(isHapticEnabled){
+                        v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                        //v.performHapticFeedback(HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING,HapticFeedbackConstants.KEYBOARD_TAP);
+                    } else {
+//                        System.out.println("Mohseen *********vibrating=");
+                         vibrator.vibrate(100);
+                    }
+
+  //                  System.out.println("Mohseen *********hapticEnabled=" + isHapticEnabled + " isTouchSoundsEnabled ="+isTouchSoundsEnabled);
+                }
+
+            }
+            return true;
+
+        }
+    }
 
     public void incrementInBulk(){
         if(alert == null) {
