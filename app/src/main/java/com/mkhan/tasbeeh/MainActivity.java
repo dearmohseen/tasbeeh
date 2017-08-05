@@ -300,7 +300,13 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     public void updateGoalUI(){
-            goalValue = Long.valueOf(sharedPref.getString(getString(R.string.pref_goal_key),"0"));
+            try {
+                goalValue = Long.valueOf(sharedPref.getString(getString(R.string.pref_goal_key), "0"));
+            } catch (Exception e){
+                goalValue = 0;
+                Utility.writeLongToSharedPref(sharedPref,getString(R.string.pref_goal_key),0);
+            }
+
             if(goalValue == 0){
                  goalTextView.setText("No Goal Set");
                 goalValueTextView.setVisibility(View.INVISIBLE);
