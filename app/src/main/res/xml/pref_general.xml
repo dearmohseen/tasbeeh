@@ -10,7 +10,7 @@
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="@string/pref_default_display_name"
+        android:defaultValue="@integer/pref_default_display_name_int"
         android:inputType="number"
         android:key="@string/pref_goal_key"
         android:maxLines="1"
@@ -19,7 +19,6 @@
         android:singleLine="true"
         android:title="@string/pref_header_goal"
         />
-
 
     <ListPreference
         android:defaultValue="#000000"
