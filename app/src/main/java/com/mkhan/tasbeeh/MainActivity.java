@@ -392,17 +392,24 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void setTextSizes(){
-        //System.out.println("Mohseen : setTextSizes " + width + " : " +height + " Orientation : " + config.orientation);
+        System.out.println("Mohseen : setTextSizes " + width + " : " +height + " Orientation : " + config.orientation);
 
         if(config.orientation == 1) {
-
+            System.out.println("Mohseen : height " + btnAdd.getLayoutParams().height + " width " + btnAdd.getLayoutParams().width);
+            if(config.densityDpi >= 400 ){
+                final float scale = this.getResources().getDisplayMetrics().density;
+                int pixels = (int) (100 * scale + 0.5f);
+                System.out.println("Mohseen : density " + config.densityDpi + " pixel = " + pixels);
+                //btnAdd.getLayoutParams().width = ( width / 2 ) * pixels;
+                btnAdd.getLayoutParams().height = height;
+            }
             if (width > 500 && height > 600) {
                 btnReset.getLayoutParams().width = 350;
                 btnReset.getLayoutParams().height = 150;
                 btnSubstract.getLayoutParams().width = 250;
                 btnSubstract.getLayoutParams().height = 150;
-                btnAdd.getLayoutParams().width = width - 100;
-                btnAdd.getLayoutParams().height = 150;
+                //btnAdd.getLayoutParams().width = 1000;
+                //btnAdd.getLayoutParams().height = 350;
                 buttonBulkAdd.getLayoutParams().width = 250;
                 buttonBulkAdd.getLayoutParams().height = 150;
                 goalTextView.setTextSize(30);
@@ -417,7 +424,7 @@ public class MainActivity extends AppCompatActivity implements
                 goalRemainValueTextView.setTextSize(size);
                 final float scale = this.getResources().getDisplayMetrics().density;
                 int pixels = (int) (100 * scale + 0.5f);
-                btnAdd.getLayoutParams().height = pixels;
+                //btnAdd.getLayoutParams().height = pixels;
             }
         } else {
             if (width > 700 && height > 450) {

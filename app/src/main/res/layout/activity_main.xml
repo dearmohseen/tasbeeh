@@ -19,11 +19,12 @@
         android:textAlignment="center"
         android:textColor="@android:color/background_light"
         android:textSize="@dimen/dim_tv_counter"
-        app:layout_constraintBottom_toTopOf="@+id/btnAdd"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnReset" />
+        app:layout_constraintTop_toBottomOf="@+id/btnReset"
+        app:layout_constraintVertical_bias="0.19999999" />
 
     <TextView
         android:id="@+id/goalText"
@@ -69,28 +70,26 @@
         android:id="@+id/goalRemainValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="sans-serif"
         android:text="1000000"
         android:textColor="@android:color/background_light"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnAdd"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCounter"
-        app:layout_constraintVertical_bias="0.492"
         app:layout_constraintLeft_toRightOf="@+id/goalRemainText"
-        android:layout_marginLeft="8dp" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewCounter" />
 
     <Button
         android:id="@+id/btnAdd"
-        android:layout_width="304dp"
-        android:layout_height="60dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="25dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/layout_round_corner"
         android:backgroundTint="@color/colorPrimary"
         android:fontFamily="sans-serif"
@@ -102,9 +101,10 @@
         android:textSize="@dimen/dim_add_button_text_size"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintLeft_toLeftOf="@+id/textViewCounter"
-        app:layout_constraintRight_toRightOf="@+id/textViewCounter" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/goalRemainValue"
+        app:layout_constraintVertical_bias="0.52" />
 
     <Button
         android:id="@+id/btnMinus"

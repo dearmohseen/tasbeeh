@@ -6,5 +6,5 @@
     <dimen name="dim_reset_button_text_size">30sp</dimen>
     <dimen name="dim_add_button_width">140dp</dimen>
     <dimen name="dim_add_button_height">60dp</dimen>
-    <dimen name="dim_add_button_text_size">40sp</dimen>
+    <dimen name="dim_add_button_text_size">100sp</dimen>
 </resources>
