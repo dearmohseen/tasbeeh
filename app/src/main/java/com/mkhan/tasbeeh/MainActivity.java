@@ -61,8 +61,8 @@ public class MainActivity extends AppCompatActivity implements
     AudioManager audioManager;
     ContentResolver mContentResolver;
     Vibrator vibrator ;
-
     AlertDialog.Builder alert;
+    //Spinner tasbeehSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +84,8 @@ public class MainActivity extends AppCompatActivity implements
         goalValueTextView = (TextView) findViewById(R.id.goalValueText);
         goalRemainTextView = (TextView) findViewById(R.id.goalRemainText);
         goalRemainValueTextView = (TextView) findViewById(R.id.goalRemainValue);
+
+        //tasbeehSpinner =  (Spinner) findViewById(R.id.spinner);
 
         readCounterFromSharedPref();
         updateCounterUI();
@@ -353,6 +355,13 @@ public class MainActivity extends AppCompatActivity implements
         goalRemainTextView.setTextColor(color);
         goalRemainValueTextView.setTextColor(color);
         textViewCounter.setTextColor(color);
+       /* View v = tasbeehSpinner.getSelectedView();
+
+        System.out.println("****** mohseen tasbeehSpinner.getEmptyView() *****" + tasbeehSpinner.getEmptyView());
+        if( v != null){
+            ((TextView)v).setTextColor(color);
+        }*/
+
     }
 
     public void updateTheme(){
@@ -392,14 +401,14 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void setTextSizes(){
-        System.out.println("Mohseen : setTextSizes " + width + " : " +height + " Orientation : " + config.orientation);
+        //System.out.println("Mohseen : setTextSizes " + width + " : " +height + " Orientation : " + config.orientation);
 
         if(config.orientation == 1) {
-            System.out.println("Mohseen : height " + btnAdd.getLayoutParams().height + " width " + btnAdd.getLayoutParams().width);
+           // System.out.println("Mohseen : height " + btnAdd.getLayoutParams().height + " width " + btnAdd.getLayoutParams().width);
             if(config.densityDpi >= 400 ){
                 final float scale = this.getResources().getDisplayMetrics().density;
                 int pixels = (int) (100 * scale + 0.5f);
-                System.out.println("Mohseen : density " + config.densityDpi + " pixel = " + pixels);
+             //   System.out.println("Mohseen : density " + config.densityDpi + " pixel = " + pixels);
                 //btnAdd.getLayoutParams().width = ( width / 2 ) * pixels;
                 btnAdd.getLayoutParams().height = height;
             }
