@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private boolean play_alarm_dialog_open = false;
     private boolean alarmDismissed = false;
+    private AlertDialog.Builder resetConfirmDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +130,8 @@ public class MainActivity extends AppCompatActivity implements
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reset();
+                //reset();
+                resetConfirmation();
             }
         });
 
@@ -493,5 +495,29 @@ public class MainActivity extends AppCompatActivity implements
 
     public void openSettings(){
         this.startActivity(new Intent(this,SettingsActivity.class));        ;
+    }
+
+    public void resetConfirmation() {
+        if (counterValue > 0) {
+            if (resetConfirmDialog == null) {
+                resetConfirmDialog = new AlertDialog.Builder(this);
+            }
+            resetConfirmDialog.setTitle("Sure to Reset the Counter ?");
+            resetConfirmDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    reset();
+                    Utility.showToast(getApplicationContext(), " Reset Successful !! ");
+                }
+            });
+
+            resetConfirmDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                }
+            });
+
+            resetConfirmDialog.show();
+
+        }
+
     }
 }
