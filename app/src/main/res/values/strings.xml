@@ -93,5 +93,6 @@
         <item>Lā ʾilāha ʾillā llah لا إله إلا الله</item>
         <item>Lā ḥawla wa-lā quwwata ʾillā bi-llāh لا حول ولاقوة إلا بالله</item>
     </string-array>
+    <string name="play_notification_on_goal_complete">play_notification_on_goal_complete</string>
 
 </resources>

@@ -64,6 +64,9 @@ public class MainActivity extends AppCompatActivity implements
     AlertDialog.Builder alert;
     //Spinner tasbeehSpinner;
 
+    private boolean play_alarm_dialog_open = false;
+    private boolean alarmDismissed = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,16 +77,16 @@ public class MainActivity extends AppCompatActivity implements
         width = config.screenWidthDp;
         height = config.screenHeightDp;
 
-        mainLayout = (ConstraintLayout) findViewById(R.id.mainLayoutID);
+        mainLayout = findViewById(R.id.mainLayoutID);
 
         prepareSharedPreference();
 
-        textViewCounter = (TextView) findViewById(R.id.textViewCounter);
+        textViewCounter =  findViewById(R.id.textViewCounter);
 
-        goalTextView = (TextView) findViewById(R.id.goalText);
-        goalValueTextView = (TextView) findViewById(R.id.goalValueText);
-        goalRemainTextView = (TextView) findViewById(R.id.goalRemainText);
-        goalRemainValueTextView = (TextView) findViewById(R.id.goalRemainValue);
+        goalTextView =  findViewById(R.id.goalText);
+        goalValueTextView =  findViewById(R.id.goalValueText);
+        goalRemainTextView =  findViewById(R.id.goalRemainText);
+        goalRemainValueTextView =  findViewById(R.id.goalRemainValue);
 
         //tasbeehSpinner =  (Spinner) findViewById(R.id.spinner);
 
@@ -94,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         mContentResolver = this.getContentResolver();
 
-        btnAdd = (Button) findViewById(R.id.btnAdd);
+        btnAdd = findViewById(R.id.btnAdd);
         btnAdd.setSoundEffectsEnabled(true);
         btnAdd.setOnTouchListener(new HapticListner());
         /*btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements
             }
         });*/
 
-        buttonBulkAdd = (Button) findViewById(R.id.buttonBulkAdd);
+        buttonBulkAdd = findViewById(R.id.buttonBulkAdd);
         buttonBulkAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
-        btnSubstract = (Button) findViewById(R.id.btnMinus);
+        btnSubstract = findViewById(R.id.btnMinus);
         btnSubstract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements
         });
 
 
-        btnReset = (Button) findViewById(R.id.btnReset);
+        btnReset = findViewById(R.id.btnReset);
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -339,11 +342,12 @@ public class MainActivity extends AppCompatActivity implements
             goalRemainValueTextView.setVisibility(View.INVISIBLE);
             goalRemainTextView.setVisibility(View.VISIBLE);
             goalRemainTextView.setText("MashaAllah ! Goal Achieved.");
+            boolean play_pref = sharedPref.getBoolean(getString(R.string.play_notification_on_goal_complete),true);
+            if(play_pref && !play_alarm_dialog_open && !alarmDismissed ){
+                playAlarmSound(getApplicationContext());
+            }
         }
-
-
     }
-
 
     public void updateTextColor(int color){
         btnSubstract.setTextColor(color);
@@ -359,7 +363,7 @@ public class MainActivity extends AppCompatActivity implements
 
         System.out.println("****** mohseen tasbeehSpinner.getEmptyView() *****" + tasbeehSpinner.getEmptyView());
         if( v != null){
-            ((TextView)v).setTextColor(color);
+            (v).setTextColor(color);
         }*/
 
     }
@@ -402,13 +406,12 @@ public class MainActivity extends AppCompatActivity implements
 
     private void setTextSizes(){
         //System.out.println("Mohseen : setTextSizes " + width + " : " +height + " Orientation : " + config.orientation);
-
+        final float scale = this.getResources().getDisplayMetrics().density;
+        int pixels = (int) (100 * scale + 0.5f);
+        //System.out.println("Mohseen : density " + config.densityDpi + " pixel = " + pixels);
         if(config.orientation == 1) {
            // System.out.println("Mohseen : height " + btnAdd.getLayoutParams().height + " width " + btnAdd.getLayoutParams().width);
             if(config.densityDpi >= 400 ){
-                final float scale = this.getResources().getDisplayMetrics().density;
-                int pixels = (int) (100 * scale + 0.5f);
-             //   System.out.println("Mohseen : density " + config.densityDpi + " pixel = " + pixels);
                 //btnAdd.getLayoutParams().width = ( width / 2 ) * pixels;
                 btnAdd.getLayoutParams().height = height;
             }
@@ -431,8 +434,12 @@ public class MainActivity extends AppCompatActivity implements
                 goalValueTextView.setTextSize(size);
                 goalRemainTextView.setTextSize(size);
                 goalRemainValueTextView.setTextSize(size);
-                final float scale = this.getResources().getDisplayMetrics().density;
-                int pixels = (int) (100 * scale + 0.5f);
+                if(config.densityDpi < 200){
+                    textViewCounter.setTextSize(80);
+                    btnSubstract.setTextSize(size + 10);
+                    buttonBulkAdd.setTextSize(size + 10);
+                    btnReset.setTextSize(size + 10);
+                }
                 //btnAdd.getLayoutParams().height = pixels;
             }
         } else {
@@ -455,5 +462,36 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
+    public void playAlarmSound(final Context context) {
 
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        this.startActivity(intent);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setNeutralButton("Dismiss", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                alarmDismissed = true;
+                play_alarm_dialog_open = false;
+            }
+        });
+
+        builder.setPositiveButton("Update Goal", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                alarmDismissed = true;
+                play_alarm_dialog_open = false;
+                openSettings();
+            }
+        });
+
+        builder.setMessage(" MashaAllah , Goal Completed ").setTitle("");
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        play_alarm_dialog_open = true;
+    }
+
+    public void openSettings(){
+        this.startActivity(new Intent(this,SettingsActivity.class));        ;
+    }
 }
