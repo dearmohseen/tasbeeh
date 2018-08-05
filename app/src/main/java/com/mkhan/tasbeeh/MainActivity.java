@@ -67,9 +67,11 @@ public class MainActivity extends AppCompatActivity implements
     private boolean play_alarm_dialog_open = false;
     private boolean alarmDismissed = false;
     private AlertDialog.Builder resetConfirmDialog;
+    private long previousGoalValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //System.out.println("****** Mohseen ******* onCreate **************" + previousGoalValue);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -219,9 +221,10 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onShareTargetSelected(ShareActionProvider source,
                                          Intent intent) {
-        Toast.makeText(this, intent.getComponent().toString(),
-                Toast.LENGTH_LONG).show();
-
+        if(intent.getComponent() != null){
+            Toast.makeText(this, intent.getComponent().toString(),
+                    Toast.LENGTH_LONG).show();
+        }
         return(false);
     }
 
@@ -314,11 +317,11 @@ public class MainActivity extends AppCompatActivity implements
                 Utility.writeLongToSharedPref(sharedPref,getString(R.string.pref_goal_key),0);
             }
 
-            if(goalValue == 0){
-                 goalTextView.setText("No Goal Set");
+            if(goalValue == 0) {
+                goalTextView.setText("No Goal Set");
                 goalValueTextView.setVisibility(View.INVISIBLE);
-                  goalRemainTextView.setVisibility(View.INVISIBLE);
-                  goalRemainValueTextView.setVisibility(View.INVISIBLE);
+                goalRemainTextView.setVisibility(View.INVISIBLE);
+                goalRemainValueTextView.setVisibility(View.INVISIBLE);
 
             } else {
                 //System.out.println("Mohseen : updateGoalUI Else  " + goalTextView);
@@ -345,7 +348,8 @@ public class MainActivity extends AppCompatActivity implements
             goalRemainTextView.setVisibility(View.VISIBLE);
             goalRemainTextView.setText("MashaAllah ! Goal Achieved.");
             boolean play_pref = sharedPref.getBoolean(getString(R.string.play_notification_on_goal_complete),true);
-            if(play_pref && !play_alarm_dialog_open && !alarmDismissed ){
+            //System.out.println("Mohseen : play_alarm_dialog_open = " + play_alarm_dialog_open + " alarmDismissed = " + alarmDismissed + " Value = " + (previousGoalValue < counterValue) );
+            if(play_pref && !play_alarm_dialog_open && !alarmDismissed && (previousGoalValue < counterValue) ){
                 playAlarmSound(getApplicationContext());
             }
         }
@@ -395,7 +399,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-       //System.out.println("Mohseen : MainActivity Resume");
+       //System.out.println("Mohseen : MainActivity Resume ********* previousGoalValue = " + previousGoalValue);
         updateGoalUI();
         updateTheme();
     }
@@ -403,7 +407,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onPause() {
         super.onPause();
-        //System.out.println("Mohseen : MainActivity onPause");
+        //System.out.println("Mohseen : MainActivity onPause : previousGoalValue = " + previousGoalValue );
     }
 
     private void setTextSizes(){
@@ -480,13 +484,15 @@ public class MainActivity extends AppCompatActivity implements
 
         builder.setPositiveButton("Update Goal", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                alarmDismissed = true;
+                //alarmDismissed = true;
                 play_alarm_dialog_open = false;
+                //System.out.println("Mohseen : update Goal : counterValue = " + counterValue );
+                previousGoalValue = counterValue;
                 openSettings();
             }
         });
 
-        builder.setMessage(" MashaAllah , Goal Completed ").setTitle("");
+        //builder.setMessage(" MashaAllah , Goal Completed ").setTitle("");
         AlertDialog dialog = builder.create();
         dialog.show();
 
@@ -494,7 +500,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     public void openSettings(){
-        this.startActivity(new Intent(this,SettingsActivity.class));        ;
+        this.startActivity(new Intent(this,SettingsActivity.class));
     }
 
     public void resetConfirmation() {

@@ -110,7 +110,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("Mohseen : SettingActivity : onCreate");
+        //System.out.println("Mohseen : SettingActivity : onCreate");
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new GeneralPreferenceFragment()).commit();
         setupActionBar();
